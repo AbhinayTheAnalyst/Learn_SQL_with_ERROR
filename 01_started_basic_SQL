@@ -1,0 +1,88 @@
+🏢 Project: Employee Management SQL Setup
+🎯 Goal:
+Design a job table with constraints, insert realistic employee data, and walk through common beginner errors (and how to fix them).
+
+📦 Step 1: Create Table with Constraints
+CREATE TABLE job (
+  employee_id INT PRIMARY KEY AUTO_INCREMENT,
+  employee_name VARCHAR(100) NOT NULL,
+  department VARCHAR(50) NOT NULL,
+  joining_date DATE CHECK (joining_date >= '2019-01-01'),
+  salary DECIMAL(10,2) CHECK (salary > 0),
+  city VARCHAR(50) DEFAULT 'Delhi',
+  experience INT DEFAULT
+
+CREATE TABLE job (
+  employee_id INT PRIMARY KEY AUTO_INCREMENT,
+  employee_name VARCHAR(100) NOT NULL,
+  department VARCHAR(50) NOT NULL,
+  joining_date DATE CHECK (joining_date >= '2019-01-01'),
+  salary DECIMAL(10,2) CHECK (salary > 0),
+  city VARCHAR(50) DEFAULT 'Delhi',
+  experience INT DEFAULT 1
+);
+✅ Concepts Applied:
+- AUTO_INCREMENT: automatic ID
+- NOT NULL: essential fields
+- CHECK: joining date must be 2019 or newer, salary must be positive
+- DEFAULT: for city and experience
+
+📥 Step 2: Insert Valid Data
+INSERT INTO job (employee_name, department, joining_date, salary, city, experience)
+VALUES ('Ravi Kumar', 'Finance', '2021-02-15', 65000.00, 'Delhi', 3);
+
+INSERT INTO job (employee_name, department, joining_date, salary)
+VALUES ('Neha Verma', 'HR', '2022-05-10', 72000.00); -- city & experience will use DEFAULT
+🟢 Result: Success
+
+
+❌ Step 3: Error Examples + Fixes
+ Violation of CHECK (joining_date)
+INSERT INTO job (employee_name, department, joining_date, salary)
+VALUES ('Amit Singh', 'IT', '2018-12-30', 85000.00);
+❌ Error: Check constraint 'joining_date >= 2019-01-01' is violated
+🛠️ Fix:
+UPDATE job SET joining_date = '2019-01-05' WHERE employee_name = 'Amit Singh';
+
+
+
+2️⃣ Missing NOT NULL Field
+INSERT INTO job (department, joining_date, salary)
+VALUES ('Marketing', '2023-03-01', 69000.00);
+
+
+❌ Error: Column 'employee_name' cannot be null
+🛠️ Fix:
+INSERT INTO job (employee_name, department, joining_date, salary)
+VALUES ('Meena Gupta', 'Marketing', '2023-03-01', 69000.00);
+
+
+
+3️⃣ Negative Salary
+INSERT INTO job (employee_name, department, joining_date, salary)
+VALUES ('Vijay Rawat', 'Operations', '2023-01-20', -55000.00);
+
+
+❌ Error: Check constraint 'salary > 0' is violated
+🛠️ Fix:
+UPDATE job SET salary = 55000.00 WHERE employee_name = 'Vijay Rawat';
+
+
+
+🔍 Step 4: View Table
+SELECT * FROM job;
+
+
+
+You’ll see the data including:
+- Auto-generated employee_id
+- Default city if not provided
+- Error-free rows only
+
+🧠 What i’ve Learned:
+| Concept | Practical Example | 
+| AUTO_INCREMENT | No need to type employee_id manually | 
+| CHECK | Rules like salary > 0, joining_date >= 2019 | 
+| NOT NULL | Mandatory fields like employee_name | 
+| DEFAULT | Auto-fill city and experience | 
+| Common Errors | Violation of CHECK, NOT NULL, wrong data types | 
